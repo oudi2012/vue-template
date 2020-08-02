@@ -1,14 +1,11 @@
 <template>
   <div class="app-container">
     <el-form ref="sysInfoForm" class="form-inline" :model="postForm" :rules="rules" label-width="120px">
-      <el-form-item label="系统名称" prop="name">
+      <el-form-item label="应用名称" prop="name">
         <el-input v-model="postForm.name" />
       </el-form-item>
-      <el-form-item label="系统负责人">
+      <el-form-item label="应用对接人">
         <el-input v-model="postForm.manager" />
-        <el-input v-model="postForm.parentId" type="hidden" />
-        <el-input v-model="postForm.orderNo" type="hidden" />
-        <el-input v-model="postForm.type" type="hidden" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="createSysInfo('sysInfoForm')">提交</el-button>
@@ -22,7 +19,7 @@
 import { sysInfoCreate } from '@/api/sysInfo'
 
 export default {
-  name: 'SysInfoDetail',
+  name: 'AppInfoDetail',
   data() {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
@@ -38,7 +35,7 @@ export default {
     return {
       postForm: {
         name: '',
-        parentId: 0,
+        parentId: this.$route.params.parentId,
         manager: '',
         orderNo: 0,
         type: 1
@@ -53,25 +50,17 @@ export default {
       this.$refs[sysInfoForm].validate((valid) => {
         if (valid) {
           this.loading = true
-          sysInfoCreate(this.postForm).then(res => {
+          sysInfoCreate(this.postForm).then(() => {
             this.loading = false
-            const code = res.data.code
-            if (code !== 0) {
-              this.$message(res.data.message)
-              this.reload()
-            } else {
-              this.$message('添加成功！')
-              this.$router.push({ path: '/sysInfo/sysInfoList' })
-            }
-          }).catch(() => {
-            console.log('error !!')
+            this.$router.push({ path: '/sysInfo/appInfoList/' + this.postForm.parentId })
+          }).catch(e => {
             this.loading = false
           })
         }
       })
     },
     onCancel() {
-      this.$router.push({ path: '/sysInfo/sysInfoList' })
+      this.$router.push({ path: '/sysInfo/appInfoList/' + this.postForm.parentId })
     }
   }
 }
@@ -80,7 +69,7 @@ export default {
 <style scoped lang="scss">
   .form-inline{
     width: 35%;
-  .el-input,.el-select{width:100%}
+    .el-input,.el-select{width:100%}
   }
   .line{
     text-align: center;

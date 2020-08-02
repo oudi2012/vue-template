@@ -39,20 +39,23 @@ export const constantRoutes = [
       {
         path: 'sysInfoList',
         name: 'sysInfoList',
-        component: () => import('@/views/sysInfo/sysInfo'),
+        component: () => import('@/views/sysInfo/sysInfoList'),
         meta: { title: '系统管理', icon: 'table' }
-      },
-      {
-        path: 'appInfoAdd',
-        name: 'appInfoAdd',
-        component: () => import('@/views/sysInfo/appInfoAdd'),
-        meta: { title: '应用添加', icon: 'table' }
-      },
-      {
-        path: 'appInfoList',
+      }, {
+        path: 'sysInfoAdd',
+        name: 'sysInfoAdd',
+        component: () => import('@/views/sysInfo/sysInfoAdd'),
+        meta: { title: '系统添加', icon: 'table' }
+      }, {
+        path: 'appInfoList/:parentId',
         name: 'appInfoList',
         component: () => import('@/views/sysInfo/appInfoList'),
         meta: { title: '应用管理', icon: 'table' }
+      }, {
+        path: 'appInfoAdd/:parentId',
+        name: 'appInfoAdd',
+        component: () => import('@/views/sysInfo/appInfoAdd'),
+        meta: { title: '应用添加', icon: 'table' }
       }
     ]
   },

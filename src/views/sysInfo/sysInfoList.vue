@@ -17,9 +17,6 @@
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="系统类型" width="110" align="center">
-          应用模块
-        </el-table-column>
         <el-table-column label="负责人" width="110" align="center">
           <template slot-scope="scope">
             {{ scope.row.manager }}
@@ -33,6 +30,13 @@
         <el-table-column align="center" label="创建时间" width="200">
           <template slot-scope="scope">
             {{ scope.row.createTime | dateFormat }}
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="应用列表" width="200">
+          <template slot-scope="scope">
+            <span>
+              <router-link :to="{path:'/sysInfo/appInfoList/'+scope.row.appId}" style="color: #00a0e9;text-decoration:underline">应用管理</router-link>
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -69,7 +73,6 @@ export default {
       isCreateEmotionShow: false,
       total: 0,
       listQuery: {
-        parentId: this.$route.params.parentId,
         sysInfoName: '',
         pageIndex: 1,
         pageSize: 20
@@ -81,7 +84,7 @@ export default {
   },
   methods: {
     search() {
-      this.getList({ parentId: this.listQuery.parentId, name: this.listQuery.sysInfoName })
+      this.getList({ name: this.listQuery.sysInfoName })
     },
     getList() {
       this.listLoading = true
@@ -92,8 +95,10 @@ export default {
       })
     },
     toCreate() {
-      console.log('this.listQuery.parentId : ' + this.listQuery.parentId)
-      this.$router.push({ path: '/sysInfo/appInfoAdd/' + this.listQuery.parentId })
+      this.$router.push({ path: '/sysInfo/sysInfoAdd/' })
+    },
+    appInfoList() {
+      this.$router.push({ path: '/sysInfo/sysInfoAdd' })
     }
   }
 }
