@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || '财务管理系统'
+const name = defaultSettings.title || '文件管理系统'
 const port = process.env.port || process.env.npm_config_port || 9528
 
 module.exports = {
@@ -17,14 +17,14 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    open: false,
     overlay: {
       warnings: false,
       errors: true
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:9090',
+        target: 'http://file.ddky.com',
         ws: true,
         chageOrigin: true,
         pathRewrite: {

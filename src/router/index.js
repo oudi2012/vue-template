@@ -25,45 +25,37 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: '管理首页',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '控制面板', icon: 'dashboard' }
+      meta: { title: '管理首页', icon: 'dashboard' }
     }]
   },
   {
-    path: '/checkAmount',
+    path: '/sysInfo',
     component: Layout,
-    name: 'AutoCheckAmount',
-    meta: { title: '自动对账', icon: 'form' },
+    name: 'sysInfo',
+    meta: { title: '系统设置', icon: 'form' },
     children: [
       {
-        path: 'online',
-        name: 'Online',
-        component: () => import('@/views/check-amount/online-check'),
-        meta: { title: '自动在线对账', icon: 'table' }
+        path: 'sysInfoList',
+        name: 'sysInfoList',
+        component: () => import('@/views/sysInfo/sysInfo'),
+        meta: { title: '系统管理', icon: 'table' }
       },
       {
-        path: 'superCheck',
-        name: 'SuperCheck',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '母单对账', icon: 'table' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
+        path: 'appInfoAdd',
+        name: 'appInfoAdd',
+        component: () => import('@/views/sysInfo/appInfoAdd'),
+        meta: { title: '应用添加', icon: 'table' }
+      },
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'appInfoList',
+        name: 'appInfoList',
+        component: () => import('@/views/sysInfo/appInfoList'),
+        meta: { title: '应用管理', icon: 'table' }
       }
     ]
   },
-
   {
     path: '/nested',
     component: Layout,
