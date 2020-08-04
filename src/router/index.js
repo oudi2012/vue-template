@@ -56,74 +56,26 @@ export const constantRoutes = [
         name: 'appInfoAdd',
         component: () => import('@/views/sysInfo/appInfoAdd'),
         meta: { title: '应用添加', icon: 'table' }
-      }
-    ]
-  },
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'),
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+      }, {
+        path: 'apiInfoList/:appId',
+        name: 'apiInfoList',
+        component: () => import('@/views/sysInfo/apiInfoList'),
+        meta: { title: '接口管理', icon: 'table' }
+      }, {
+        path: 'apiInfoAdd/:appId',
+        name: 'apiInfoAdd',
+        component: () => import('@/views/sysInfo/apiInfoAdd'),
+        meta: { title: '接口添加', icon: 'table' }
+      }, {
+        path: 'templateList/:apiId',
+        name: 'templateList',
+        component: () => import('@/views/sysInfo/templateList'),
+        meta: { title: '接口文件导出模板', icon: 'table' }
+      }, {
+        path: 'templateAdd/:apiId',
+        name: 'templateAdd',
+        component: () => import('@/views/sysInfo/templateAdd'),
+        meta: { title: '添加文件导出模板', icon: 'table' }
       }
     ]
   },

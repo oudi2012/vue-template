@@ -53,16 +53,10 @@ export default {
       this.$refs[sysInfoForm].validate((valid) => {
         if (valid) {
           this.loading = true
-          sysInfoCreate(this.postForm).then(res => {
+          sysInfoCreate(this.postForm).then(result => {
             this.loading = false
-            const code = res.data.code
-            if (code !== 0) {
-              this.$message(res.data.message)
-              this.reload()
-            } else {
-              this.$message('添加成功！')
-              this.$router.push({ path: '/sysInfo/sysInfoList' })
-            }
+            this.$message.success('添加成功！')
+            this.$router.push({ path: '/sysInfo/sysInfoList' })
           }).catch(() => {
             console.log('error !!')
             this.loading = false

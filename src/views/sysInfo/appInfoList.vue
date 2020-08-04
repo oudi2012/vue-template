@@ -35,6 +35,12 @@
             {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
+        <el-table-column align="center" label="操作" width="200">
+          <template slot-scope="scope">
+            <el-button size="mini" type="success" @click="toApiList(scope.row.appId)">接口管理</el-button>
+            <el-button size="mini" type="danger" @click="remove(scope.row.appId)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageIndex" :limit.sync="listQuery.pageSize" @pagination="getList" />
     </div>
@@ -94,6 +100,10 @@ export default {
     toCreate() {
       console.log('this.listQuery.parentId : ' + this.listQuery.parentId)
       this.$router.push({ path: '/sysInfo/appInfoAdd/' + this.listQuery.parentId })
+    },
+    toApiList(appId) {
+      console.log('this.listQuery.appId : ' + appId)
+      this.$router.push({ path: '/sysInfo/apiInfoList/' + appId })
     }
   }
 }
