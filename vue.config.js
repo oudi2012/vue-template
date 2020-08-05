@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || '文件管理系统'
-const port = process.env.port || process.env.npm_config_port || 9528
+const port = process.env.port || process.env.npm_config_port || 9527
 
 module.exports = {
   publicPath: '/',
@@ -24,7 +24,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'http://file.ddky.com',
+        target: 'http://192.168.41.90',
         ws: true,
         chageOrigin: true,
         pathRewrite: {

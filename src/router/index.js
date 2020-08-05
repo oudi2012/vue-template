@@ -44,38 +44,39 @@ export const constantRoutes = [
       }, {
         path: 'sysInfoAdd',
         name: 'sysInfoAdd',
-        component: () => import('@/views/sysInfo/sysInfoAdd'),
-        meta: { title: '系统添加', icon: 'table' }
+        component: () => import('@/views/sysInfo/sysInfoAdd')
       }, {
         path: 'appInfoList/:parentId',
         name: 'appInfoList',
-        component: () => import('@/views/sysInfo/appInfoList'),
-        meta: { title: '应用管理', icon: 'table' }
+        component: () => import('@/views/sysInfo/appInfoList')
       }, {
         path: 'appInfoAdd/:parentId',
         name: 'appInfoAdd',
-        component: () => import('@/views/sysInfo/appInfoAdd'),
-        meta: { title: '应用添加', icon: 'table' }
+        component: () => import('@/views/sysInfo/appInfoAdd')
       }, {
         path: 'apiInfoList/:appId',
         name: 'apiInfoList',
-        component: () => import('@/views/sysInfo/apiInfoList'),
-        meta: { title: '接口管理', icon: 'table' }
+        component: () => import('@/views/sysInfo/apiInfoList')
       }, {
         path: 'apiInfoAdd/:appId',
         name: 'apiInfoAdd',
-        component: () => import('@/views/sysInfo/apiInfoAdd'),
-        meta: { title: '接口添加', icon: 'table' }
+        component: () => import('@/views/sysInfo/apiInfoAdd')
       }, {
         path: 'templateList/:apiId',
         name: 'templateList',
-        component: () => import('@/views/sysInfo/templateList'),
-        meta: { title: '接口文件导出模板', icon: 'table' }
+        component: () => import('@/views/sysInfo/templateList')
       }, {
         path: 'templateAdd/:apiId',
         name: 'templateAdd',
-        component: () => import('@/views/sysInfo/templateAdd'),
-        meta: { title: '添加文件导出模板', icon: 'table' }
+        component: () => import('@/views/sysInfo/templateAdd')
+      }, {
+        path: 'templateItemList/:tplId',
+        name: 'templateItemList',
+        component: () => import('@/views/sysInfo/templateItemList')
+      }, {
+        path: 'templateItemAdd/:tplId',
+        name: 'templateItemAdd',
+        component: () => import('@/views/sysInfo/templateItemAdd')
       }
     ]
   },
@@ -83,7 +84,6 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 

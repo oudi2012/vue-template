@@ -1,30 +1,25 @@
 <template>
   <div class="wrap">
     <div class="search-wrap">
-      <div><el-input v-model="listQuery.templateName" placeholder="输入关键词" /></div>
+      <div><el-input v-model="listQuery.templateItemName" placeholder="输入关键词" /></div>
       <div><el-button type="primary" @click="search">搜索</el-button></div>
       <div><el-button type="primary" @click="toCreate">创建</el-button></div>
     </div>
     <div class="table">
-      <el-table v-loading="listLoading" :data="templateList" element-loading-text="Loading" border fit highlight-current-row>
+      <el-table v-loading="listLoading" :data="templateItemList" element-loading-text="Loading" border fit highlight-current-row>
         <el-table-column align="center" label="编号" width="95">
           <template slot-scope="scope">
-            {{ scope.row.tplId }}
+            {{ scope.row.id }}
           </template>
         </el-table-column>
-        <el-table-column label="导出文件模板名称">
+        <el-table-column label="模板项标题" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.name }}</span>
+            <span>{{ scope.row.colTitle }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="接口名称" width="300" align="center">
+        <el-table-column label="模板项名称" align="center">
           <template slot-scope="scope">
-            {{ scope.row.apiName }}
-          </template>
-        </el-table-column>
-        <el-table-column label="是否有合计" width="110" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.hasTotal }}
+            {{ scope.row.colName }}
           </template>
         </el-table-column>
         <el-table-column align="center" label="创建时间" width="200">
@@ -32,12 +27,9 @@
             {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="模板项列表" width="200">
+        <el-table-column align="center" label="操作" width="200">
           <template slot-scope="scope">
-            <router-link :to="{path:'/sysInfo/templateItemList/'+scope.row.tplId}" style="color: #00a0e9;text-decoration:none">
-              <el-button size="mini" type="success">模板项列表</el-button>
-            </router-link>
-            <el-button size="mini" type="danger" @click="remove(scope.row.tplId)">删除</el-button>
+            <el-button size="mini" type="danger" @click="remove(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -47,7 +39,7 @@
 </template>
 
 <script>
-import { templatePageList, templateRemove } from '@/api/sysInfo'
+import { templateItemPageList, templateItemRemove } from '@/api/sysInfo'
 import Pagination from '@/components/Pagination'
 import { formatDate } from '@/utils/date'
 
@@ -69,13 +61,13 @@ export default {
   },
   data() {
     return {
-      templateList: null,
+      templateItemList: null,
       listLoading: true,
       isCreateEmotionShow: false,
       total: 0,
       listQuery: {
-        apiId: this.$route.params.apiId,
-        templateName: '',
+        tplId: this.$route.params.tplId,
+        templateItemName: '',
         pageIndex: 1,
         pageSize: 20
       }
@@ -86,22 +78,22 @@ export default {
   },
   methods: {
     search() {
-      this.getList({ name: this.listQuery.templateName })
+      this.getList({ tplId: this.listQuery.tplId, colName: this.listQuery.templateItemName })
     },
     getList() {
       this.listLoading = true
-      templatePageList(this.listQuery).then(response => {
-        this.templateList = response.data.list
+      templateItemPageList(this.listQuery).then(response => {
+        this.templateItemList = response.data.list
         this.total = response.data.total
         this.listLoading = false
       })
     },
     toCreate() {
-      this.$router.push({ path: '/sysInfo/templateAdd/' + this.listQuery.apiId })
+      this.$router.push({ path: '/sysInfo/templateItemAdd/' + this.listQuery.tplId })
     },
-    remove(tplId) {
+    remove(id) {
       this.listLoading = true
-      templateRemove(tplId).then(response => {
+      templateItemRemove(id).then(response => {
         this.listLoading = false
       }).catch(() => {
         this.loading = false

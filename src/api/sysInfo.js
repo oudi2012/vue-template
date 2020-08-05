@@ -68,3 +68,26 @@ export function templateRemove(tplId) {
     method: 'get'
   })
 }
+
+export function templateItemPageList(data) {
+  return request({
+    url: '/sys/templateItem/pageList.htm',
+    method: 'get',
+    params: data
+  })
+}
+
+export function templateItemCreateList(data) {
+  return request({
+    url: '/sys/templateItem/createList.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function templateItemRemove(id) {
+  return request({
+    url: '/sys/templateItem/removeById.htm?id=' + id,
+    method: 'get'
+  })
+}
