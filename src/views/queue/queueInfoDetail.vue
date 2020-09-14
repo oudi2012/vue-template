@@ -63,7 +63,7 @@ export default {
           this.loading = true
           queueInfoUpdate(this.postForm).then(() => {
             this.loading = false
-            this.$message.success('创建成功!')
+            this.$message.success('修改成功!')
             this.$router.push({ path: '/queueInfo/queueInfoList' })
           }).catch(e => {
             this.loading = false
