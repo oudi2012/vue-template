@@ -19,8 +19,7 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
-  {
+  }, {
     path: '/',
     component: Layout,
     children: [{
@@ -29,8 +28,7 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '管理首页', icon: 'dashboard' }
     }]
-  },
-  {
+  }, {
     path: '/sysInfo',
     component: Layout,
     name: 'sysInfo',
@@ -77,6 +75,23 @@ export const constantRoutes = [
         path: 'templateItemAdd/:tplId',
         name: 'templateItemAdd',
         component: () => import('@/views/sysInfo/templateItemAdd')
+      }
+    ]
+  }, {
+    path: '/queueInfo',
+    component: Layout,
+    name: 'queueInfo',
+    meta: { title: '任务管理', icon: 'form' },
+    children: [
+      {
+        path: 'queueInfoList',
+        name: 'taskList',
+        component: () => import('@/views/queue/queueInfoList'),
+        meta: { title: '任务列表', icon: 'table' }
+      }, {
+        path: 'queueInfoEdit/:id',
+        name: 'queueInfoEdit',
+        component: () => import('@/views/queue/queueInfoEdit')
       }
     ]
   },

@@ -1,35 +1,19 @@
 <template>
   <div class="wrap">
     <div class="search-wrap">
-      <div><el-input v-model="listQuery.apiInfoName" placeholder="输入关键词" /></div>
+      <div><el-input v-model="listQuery.fileName" placeholder="文件名" /></div><div><el-input v-model="listQuery.code" placeholder="code码" /></div>
       <div><el-button type="primary" @click="search">搜索</el-button></div>
-      <div><el-button type="primary" @click="toCreate">创建</el-button></div>
     </div>
     <div class="table">
-      <el-table v-loading="listLoading" :data="apiInfoList" element-loading-text="Loading" border fit highlight-current-row>
+      <el-table v-loading="listLoading" :data="queueInfoList" element-loading-text="Loading" border fit highlight-current-row>
         <el-table-column align="center" label="编号" width="95">
           <template slot-scope="scope">
-            {{ scope.row.apiId }}
+            {{ scope.row.id }}
           </template>
         </el-table-column>
-        <el-table-column label="名称">
+        <el-table-column label="接口名称" width="200" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.apiName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="所属应用" width="110" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.appName }}
-          </template>
-        </el-table-column>
-        <el-table-column label="负责人" width="110" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.manager }}
-          </template>
-        </el-table-column>
-        <el-table-column label="服务名称" width="200" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.serviceName }}
+            {{ scope.row.apiName }}
           </template>
         </el-table-column>
         <el-table-column label="code" width="300" align="center">
@@ -37,15 +21,24 @@
             {{ scope.row.code }}
           </template>
         </el-table-column>
+        <el-table-column label="文件名称" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.fileName }}
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" width="100" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.state | stateFormat }}
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="创建时间" width="180">
           <template slot-scope="scope">
             {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="300">
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button type="success" @click="toTmpList(scope.row.apiId)">配置导出文件模板</el-button>
-            <el-button type="danger" @click="remove(scope.row.apiId)">删除</el-button>
+            <el-button type="success" @click="toEdit(scope.row.id)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -55,7 +48,7 @@
 </template>
 
 <script>
-import { apiInfoPageList, apiInfoRemove } from '@/api/sysInfo'
+import { queueInfoPageList } from '@/api/sysInfo'
 import Pagination from '@/components/Pagination'
 import { formatDate } from '@/utils/date'
 
@@ -70,6 +63,19 @@ export default {
       }
       return statusMap[status]
     },
+    stateFormat(state) {
+      if (state === 10) {
+        return '等待执行'
+      } else if (state === 20) {
+        return '运行中'
+      } else if (state === 30) {
+        return '完成'
+      } else if (state === 40) {
+        return '导出失败'
+      } else {
+        return '其它'
+      }
+    },
     dateFormat(time) {
       const date = new Date(time * 1000)
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
@@ -77,13 +83,12 @@ export default {
   },
   data() {
     return {
-      apiInfoList: null,
+      queueInfoList: null,
       listLoading: true,
-      isCreateEmotionShow: false,
       total: 0,
       listQuery: {
-        appId: this.$route.params.appId,
-        apiInfoName: '',
+        fileName: null,
+        code: null,
         pageIndex: 1,
         pageSize: 20
       }
@@ -94,30 +99,18 @@ export default {
   },
   methods: {
     search() {
-      this.getList({ appId: this.listQuery.appId, apiName: this.listQuery.apiInfoName })
+      this.getList({ fileName: this.listQuery.fileName, code: this.listQuery.code })
     },
     getList() {
       this.listLoading = true
-      apiInfoPageList(this.listQuery).then(response => {
-        this.apiInfoList = response.data.list
+      queueInfoPageList(this.listQuery).then(response => {
+        this.queueInfoList = response.data.list
         this.total = response.data.total
         this.listLoading = false
       })
     },
-    toCreate() {
-      this.$router.push({ path: '/sysInfo/apiInfoAdd/' + this.listQuery.appId })
-    },
-    toTmpList(apiId) {
-      this.$router.push({ path: '/sysInfo/templateList/' + apiId })
-    },
-    remove(apiId) {
-      this.listLoading = true
-      apiInfoRemove(apiId).then(response => {
-        this.listLoading = false
-      }).catch(() => {
-        this.loading = false
-      })
-      this.getList()
+    toEdit(id) {
+      this.$router.push({ path: '/queueInfo/queueInfoEdit/' + id })
     }
   }
 }

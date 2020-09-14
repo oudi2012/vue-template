@@ -91,3 +91,26 @@ export function templateItemRemove(id) {
     method: 'get'
   })
 }
+
+export function queueInfoPageList(data) {
+  return request({
+    url: '/sys/exportQueue/pageList.htm',
+    method: 'get',
+    params: data
+  })
+}
+
+export function queueInfoUpdate(data) {
+  return request({
+    url: '/sys/exportQueue/edit.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function queueInfoFindById(id) {
+  return request({
+    url: '/sys/exportQueue/findById.htm?id=' + id,
+    method: 'get'
+  })
+}
