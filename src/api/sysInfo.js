@@ -114,3 +114,57 @@ export function queueInfoFindById(id) {
     method: 'get'
   })
 }
+
+export function queueInfoRemoveById(id) {
+  return request({
+    url: '/sys/exportQueue/removeById.htm?id=' + id,
+    method: 'get'
+  })
+}
+
+export function sysParamInfoPageList(data) {
+  return request({
+    url: '/sys/param/pageList.htm',
+    method: 'get',
+    params: data
+  })
+}
+
+export function sysParamInfoCreate(data) {
+  return request({
+    url: '/sys/param/create.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function sysParamInfoUpdate(data) {
+  return request({
+    url: '/sys/param/edit.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function sysParamInfoFindById(id) {
+  return request({
+    url: '/sys/param/findById.htm?id=' + id,
+    method: 'get'
+  })
+}
+
+export function testRequestUrl(userId, code, data) {
+  return request({
+    url: '/export/fileExport.htm?userId=' + userId + '&code=' + code,
+    method: 'post',
+    data
+  })
+}
+
+export function urlToJsonForm(data) {
+  return request({
+    url: '/sys/tools/urlToJson.htm',
+    method: 'post',
+    data
+  })
+}

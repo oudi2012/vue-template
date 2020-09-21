@@ -40,6 +40,11 @@ export const constantRoutes = [
         component: () => import('@/views/sysInfo/sysInfoList'),
         meta: { title: '系统管理', icon: 'table' }
       }, {
+        path: 'sysParamInfoList',
+        name: 'sysParamInfoList',
+        component: () => import('@/views/sysInfo/sysParamInfoList'),
+        meta: { title: '参数管理', icon: 'table' }
+      }, {
         path: 'sysInfoAdd',
         name: 'sysInfoAdd',
         component: () => import('@/views/sysInfo/sysInfoAdd')
@@ -75,6 +80,14 @@ export const constantRoutes = [
         path: 'templateItemAdd/:tplId',
         name: 'templateItemAdd',
         component: () => import('@/views/sysInfo/templateItemAdd')
+      }, {
+        path: 'sysParamInfoAdd',
+        name: 'sysParamInfoAdd',
+        component: () => import('@/views/sysInfo/sysParamInfoAdd')
+      }, {
+        path: 'sysParamInfoEdit/:paramId',
+        name: 'sysParamInfoEdit',
+        component: () => import('@/views/sysInfo/sysParamInfoEdit')
       }
     ]
   }, {
@@ -88,6 +101,16 @@ export const constantRoutes = [
         name: 'taskList',
         component: () => import('@/views/queue/queueInfoList'),
         meta: { title: '任务列表', icon: 'table' }
+      }, {
+        path: 'testRequestUrl',
+        name: 'testRequestUrl',
+        component: () => import('@/views/queue/virtualDataDetail'),
+        meta: { title: '模拟请求', icon: 'table' }
+      }, {
+        path: 'urlToJson',
+        name: 'urlToJson',
+        component: () => import('@/views/queue/urlToJsonDetail'),
+        meta: { title: 'urlToJson', icon: 'table' }
       }, {
         path: 'queueInfoEdit/:id',
         name: 'queueInfoEdit',

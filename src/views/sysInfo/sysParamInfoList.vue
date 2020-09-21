@@ -1,34 +1,30 @@
 <template>
   <div class="wrap">
     <div class="search-wrap">
-      <div><el-input v-model="listQuery.fileName" placeholder="文件名" /></div><div><el-input v-model="listQuery.code" placeholder="code码" /></div>
+      <div><el-input v-model="listQuery.paramName" placeholder="输入关键词" /></div>
       <div><el-button type="primary" @click="search">搜索</el-button></div>
+      <div><el-button type="primary" @click="toCreate">创建</el-button></div>
     </div>
     <div class="table">
-      <el-table v-loading="listLoading" :data="queueInfoList" element-loading-text="Loading" border fit highlight-current-row>
+      <el-table v-loading="listLoading" :data="sysParamInfoList" element-loading-text="Loading" border fit highlight-current-row>
         <el-table-column align="center" label="编号" width="95">
           <template slot-scope="scope">
-            {{ scope.row.id }}
+            {{ scope.row.paramId }}
           </template>
         </el-table-column>
-        <el-table-column label="接口名称" width="200" align="center">
+        <el-table-column label="参数编码">
           <template slot-scope="scope">
-            {{ scope.row.apiName }}
+            <span>{{ scope.row.paramCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="code" width="300" align="center">
+        <el-table-column label="参数名称" align="center">
           <template slot-scope="scope">
-            {{ scope.row.code }}
+            {{ scope.row.paramName }}
           </template>
         </el-table-column>
-        <el-table-column label="文件名称" align="center">
+        <el-table-column label="参数值" align="center">
           <template slot-scope="scope">
-            {{ scope.row.fileName }}
-          </template>
-        </el-table-column>
-        <el-table-column label="状态" width="100" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.state | stateFormat }}
+            {{ scope.row.paramValue }}
           </template>
         </el-table-column>
         <el-table-column align="center" label="创建时间" width="180">
@@ -38,8 +34,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="300">
           <template slot-scope="scope">
-            <el-button type="success" @click="toEdit(scope.row.id)">修改</el-button>
-            <el-button type="danger" @click="remove(scope.row.id)">删除</el-button>
+            <el-button type="success" @click="toEdit(scope.row.paramId)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -49,7 +44,7 @@
 </template>
 
 <script>
-import { queueInfoRemoveById, queueInfoPageList } from '@/api/sysInfo'
+import { sysParamInfoPageList } from '@/api/sysInfo'
 import Pagination from '@/components/Pagination'
 import { formatDate } from '@/utils/date'
 
@@ -64,19 +59,6 @@ export default {
       }
       return statusMap[status]
     },
-    stateFormat(state) {
-      if (state === 10) {
-        return '等待执行'
-      } else if (state === 20) {
-        return '运行中'
-      } else if (state === 30) {
-        return '完成'
-      } else if (state === 40) {
-        return '导出失败'
-      } else {
-        return '其它'
-      }
-    },
     dateFormat(time) {
       const date = new Date(time * 1000)
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
@@ -84,12 +66,11 @@ export default {
   },
   data() {
     return {
-      queueInfoList: null,
+      sysParamInfoList: null,
       listLoading: true,
       total: 0,
       listQuery: {
-        fileName: null,
-        code: null,
+        paramName: '',
         pageIndex: 1,
         pageSize: 20
       }
@@ -100,27 +81,21 @@ export default {
   },
   methods: {
     search() {
-      this.getList({ fileName: this.listQuery.fileName, code: this.listQuery.code })
+      this.getList({ paramName: this.listQuery.paramName })
     },
     getList() {
       this.listLoading = true
-      queueInfoPageList(this.listQuery).then(response => {
-        this.queueInfoList = response.data.list
+      sysParamInfoPageList(this.listQuery).then(response => {
+        this.sysParamInfoList = response.data.list
         this.total = response.data.total
         this.listLoading = false
       })
     },
-    toEdit(id) {
-      this.$router.push({ path: '/queueInfo/queueInfoEdit/' + id })
+    toCreate() {
+      this.$router.push({ path: '/sysInfo/sysParamInfoAdd' })
     },
-    remove(id) {
-      this.listLoading = true
-      queueInfoRemoveById(id).then(response => {
-        this.listLoading = false
-      }).catch(() => {
-        this.loading = false
-      })
-      this.getList()
+    toEdit(paramId) {
+      this.$router.push({ path: '/sysInfo/sysParamInfoEdit/' + paramId })
     }
   }
 }
