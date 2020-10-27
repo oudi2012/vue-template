@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { sysInfoPageList } from '@/api/sysInfo'
+  import {sysInfoPageList, sysInfoRemove} from '@/api/sysInfo'
 import Pagination from '@/components/Pagination'
 import { formatDate } from '@/utils/date'
 
@@ -96,6 +96,15 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    remove(appId) {
+      this.listLoading = true
+      sysInfoRemove(appId).then(response => {
+        this.listLoading = false
+      }).catch(() => {
+        this.loading = false
+      })
+      this.getList()
     },
     toCreate() {
       console.log('this.listQuery.parentId : ' + this.listQuery.parentId)
