@@ -1,8 +1,11 @@
 <template>
   <div class="app-container">
     <el-form ref="sysInfoForm" class="form-inline" :model="postForm" :rules="rules" label-width="120px">
-      <el-form-item label="应用名称" prop="name">
+      <el-form-item label="应用编码" prop="name">
         <el-input v-model="postForm.name" />
+      </el-form-item>
+      <el-form-item label="应用名称" prop="title">
+        <el-input v-model="postForm.title" />
       </el-form-item>
       <el-form-item label="应用对接人">
         <el-input v-model="postForm.manager" />
@@ -35,6 +38,7 @@ export default {
     return {
       postForm: {
         name: '',
+        title:'',
         parentId: this.$route.params.parentId,
         manager: '',
         orderNo: 0,

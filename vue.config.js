@@ -25,7 +25,7 @@ module.exports = {
     proxy: {
       '/api': {
         /* pre 172.18.100.82:8080 prod 172.18.33.140:8080 */
-        target: 'http://172.18.100.82:8080/',
+        target: 'http://172.18.33.140:8080/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

@@ -12,9 +12,14 @@
             {{ scope.row.appId }}
           </template>
         </el-table-column>
-        <el-table-column label="名称">
+        <el-table-column label="应用编码">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="应用名称">
+          <template slot-scope="scope">
+            <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
         <el-table-column label="系统类型" width="110" align="center">
