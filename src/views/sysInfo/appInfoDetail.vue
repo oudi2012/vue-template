@@ -11,7 +11,7 @@
         <el-input v-model="postForm.manager" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="createSysInfo('sysInfoForm')">提交</el-button>
+        <el-button type="primary" @click="updateSysInfo('sysInfoForm')">提交</el-button>
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { sysInfoCreate } from '@/api/sysInfo'
+import { sysInfoCreate, sysInfoUpdate, sysInfoFind } from '@/api/sysInfo'
 
 export default {
   name: 'AppInfoDetail',
@@ -38,29 +38,53 @@ export default {
     return {
       postForm: {
         name: '',
-        title:'',
+        title: '',
+        appId: this.$route.params.appId,
         parentId: this.$route.params.parentId,
         manager: '',
         orderNo: 0,
         type: 1
       },
       rules: {
-        name: [{ validator: validateRequire }]
+        name: [{ validator: validateRequire }],
+        title: [{ validator: validateRequire }]
       }
     }
   },
+  created() {
+    if (this.postForm.appId) {
+      this.findItem()
+    }
+  },
   methods: {
-    createSysInfo(sysInfoForm) {
+    findItem() {
+      sysInfoFind(this.postForm.appId).then(res => {
+        this.postForm.name = res.data.name
+        this.postForm.manager = res.data.manager
+        this.postForm.title = res.data.title
+      })
+    },
+    updateSysInfo(sysInfoForm) {
       this.$refs[sysInfoForm].validate((valid) => {
         if (valid) {
           this.loading = true
-          sysInfoCreate(this.postForm).then(() => {
-            this.loading = false
-            this.$message.success('创建成功!')
-            this.$router.push({ path: '/sysInfo/appInfoList/' + this.postForm.parentId })
-          }).catch(e => {
-            this.loading = false
-          })
+          if (this.postForm.appId) {
+            sysInfoUpdate(this.postForm).then(() => {
+              this.loading = false
+              this.$message.success('保存成功!')
+              this.$router.push({ path: '/sysInfo/appInfoList/' + this.postForm.parentId })
+            }).catch(e => {
+              this.loading = false
+            })
+          } else {
+            sysInfoCreate(this.postForm).then(() => {
+              this.loading = false
+              this.$message.success('创建成功!')
+              this.$router.push({ path: '/sysInfo/appInfoList/' + this.postForm.parentId })
+            }).catch(e => {
+              this.loading = false
+            })
+          }
         }
       })
     },

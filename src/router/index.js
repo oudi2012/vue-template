@@ -57,6 +57,10 @@ export const constantRoutes = [
         name: 'appInfoAdd',
         component: () => import('@/views/sysInfo/appInfoAdd')
       }, {
+        path: 'appInfoEdit/:parentId/:appId',
+        name: 'appInfoEdit',
+        component: () => import('@/views/sysInfo/appInfoEdit')
+      }, {
         path: 'apiInfoList/:appId',
         name: 'apiInfoList',
         component: () => import('@/views/sysInfo/apiInfoList')
@@ -64,6 +68,10 @@ export const constantRoutes = [
         path: 'apiInfoAdd/:appId',
         name: 'apiInfoAdd',
         component: () => import('@/views/sysInfo/apiInfoAdd')
+      }, {
+        path: 'apiInfoEdit/:appId/:apiId',
+        name: 'apiInfoEdit',
+        component: () => import('@/views/sysInfo/apiInfoEdit')
       }, {
         path: 'templateList/:apiId',
         name: 'templateList',

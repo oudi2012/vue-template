@@ -12,9 +12,14 @@
             {{ scope.row.apiId }}
           </template>
         </el-table-column>
-        <el-table-column label="名称">
+        <el-table-column label="接口名称">
           <template slot-scope="scope">
             <span>{{ scope.row.apiName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="接口描述">
+          <template slot-scope="scope">
+            <span>{{ scope.row.apiTitle }}</span>
           </template>
         </el-table-column>
         <el-table-column label="所属应用" width="110" align="center">
@@ -42,9 +47,10 @@
             {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="300">
+        <el-table-column fixed="right" label="操作" width="350">
           <template slot-scope="scope">
             <el-button type="success" @click="toTmpList(scope.row.apiId)">配置导出文件模板</el-button>
+            <el-button type="success" @click="toEdit(scope.row.apiId)">编辑</el-button>
             <el-button type="danger" @click="remove(scope.row.apiId)">删除</el-button>
           </template>
         </el-table-column>
@@ -106,6 +112,9 @@ export default {
     },
     toCreate() {
       this.$router.push({ path: '/sysInfo/apiInfoAdd/' + this.listQuery.appId })
+    },
+    toEdit(apiId) {
+      this.$router.push({ path: '/sysInfo/apiInfoEdit/' + this.listQuery.appId + '/' + apiId })
     },
     toTmpList(apiId) {
       this.$router.push({ path: '/sysInfo/templateList/' + apiId })

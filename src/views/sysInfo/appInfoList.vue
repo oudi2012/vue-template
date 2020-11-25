@@ -40,9 +40,10 @@
             {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="200">
+        <el-table-column align="center" label="操作" width="300">
           <template slot-scope="scope">
             <el-button size="mini" type="success" @click="toApiList(scope.row.appId)">接口管理</el-button>
+            <el-button size="mini" type="success" @click="edit(scope.row.appId)">编辑</el-button>
             <el-button size="mini" type="danger" @click="remove(scope.row.appId)">删除</el-button>
           </template>
         </el-table-column>
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-  import {sysInfoPageList, sysInfoRemove} from '@/api/sysInfo'
+import { sysInfoPageList, sysInfoRemove } from '@/api/sysInfo'
 import Pagination from '@/components/Pagination'
 import { formatDate } from '@/utils/date'
 
@@ -101,6 +102,11 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    edit(appId) {
+      this.listLoading = true
+      console.log('this.listQuery.parentId : ' + this.listQuery.parentId)
+      this.$router.push({ path: '/sysInfo/appInfoEdit/' + this.listQuery.parentId + '/' + appId })
     },
     remove(appId) {
       this.listLoading = true

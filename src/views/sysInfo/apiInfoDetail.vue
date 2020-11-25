@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form ref="apiInfoForm" class="form-inline" :model="postForm" :rules="rules" label-width="120px">
       <el-form-item label="接口名称" prop="name">
-        <el-input v-model="postForm.apiName" />
+        <el-input v-model="postForm.apiName" />(英文表示)
       </el-form-item>
-      <el-form-item label="接口地址">
-        <el-input v-model="postForm.remoteUrl" />
+      <el-form-item label="接口描述">
+        <el-input v-model="postForm.apiTitle" />(汉语表示)
       </el-form-item>
       <el-form-item label="服务名称">
         <el-input v-model="postForm.serviceName" />
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { apiInfoCreate } from '@/api/sysInfo'
+import { apiInfoCreate, apiInfoFind, apiInfoUpdate } from '@/api/sysInfo'
 
 export default {
   name: 'ApiInfoDetail',
@@ -38,31 +38,54 @@ export default {
     return {
       postForm: {
         apiName: '',
+        apiId: this.$route.params.apiId,
         appId: this.$route.params.appId,
-        remoteUrl: '',
+        apiTitle: '',
         serviceName: '',
         orderNo: 0,
         type: 1
       },
       rules: {
         apiName: [{ validator: validateRequire }],
-        remoteUrl: [{ validator: validateRequire }],
+        apiTitle: [{ validator: validateRequire }],
         serviceName: [{ validator: validateRequire }]
       }
     }
   },
+  created() {
+    if (this.postForm.apiId) {
+      this.findItem()
+    }
+  },
   methods: {
+    findItem() {
+      apiInfoFind(this.postForm.apiId).then(res => {
+        this.postForm.apiName = res.data.apiName
+        this.postForm.apiTitle = res.data.apiTitle
+        this.postForm.serviceName = res.data.serviceName
+      })
+    },
     createSysInfo(apiInfoForm) {
       this.$refs[apiInfoForm].validate((valid) => {
         if (valid) {
           this.loading = true
-          apiInfoCreate(this.postForm).then(() => {
-            this.loading = false
-            this.$message.success('创建成功!')
-            this.$router.push({ path: '/sysInfo/apiInfoList/' + this.postForm.appId })
-          }).catch(e => {
-            this.loading = false
-          })
+          if (this.postForm.apiId) {
+            apiInfoUpdate(this.postForm).then(() => {
+              this.loading = false
+              this.$message.success('保存成功!')
+              this.$router.push({ path: '/sysInfo/apiInfoList/' + this.postForm.appId })
+            }).catch(e => {
+              this.loading = false
+            })
+          } else {
+            apiInfoCreate(this.postForm).then(() => {
+              this.loading = false
+              this.$message.success('创建成功!')
+              this.$router.push({ path: '/sysInfo/apiInfoList/' + this.postForm.appId })
+            }).catch(e => {
+              this.loading = false
+            })
+          }
         }
       })
     },

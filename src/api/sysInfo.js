@@ -16,6 +16,21 @@ export function sysInfoCreate(data) {
   })
 }
 
+export function sysInfoFind(id) {
+  return request({
+    url: '/sys/app/findById.htm?id=' + id,
+    method: 'get'
+  })
+}
+
+export function sysInfoUpdate(data) {
+  return request({
+    url: '/sys/app/edit.htm',
+    method: 'post',
+    data
+  })
+}
+
 export function sysInfoRemove(appId) {
   return request({
     url: '/sys/app/removeById.htm?appId=' + appId,
@@ -31,9 +46,24 @@ export function apiInfoPageList(data) {
   })
 }
 
+export function apiInfoFind(id) {
+  return request({
+    url: '/sys/apiInfo/findById.htm?id=' + id,
+    method: 'get'
+  })
+}
+
 export function apiInfoCreate(data) {
   return request({
     url: '/sys/apiInfo/create.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function apiInfoUpdate(data) {
+  return request({
+    url: '/sys/apiInfo/edit.htm',
     method: 'post',
     data
   })
