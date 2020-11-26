@@ -198,3 +198,41 @@ export function urlToJsonForm(data) {
     data
   })
 }
+
+export function fileTypePageList(data) {
+  return request({
+    url: '/sys/fileType/pageList.htm',
+    method: 'get',
+    params: data
+  })
+}
+
+export function fileTypeFind(id) {
+  return request({
+    url: '/sys/fileType/findById.htm?id=' + id,
+    method: 'get'
+  })
+}
+
+export function fileTypeCreate(data) {
+  return request({
+    url: '/sys/fileType/create.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function fileTypeUpdate(data) {
+  return request({
+    url: '/sys/fileType/edit.htm',
+    method: 'post',
+    data
+  })
+}
+
+export function fileTypeRemove(id) {
+  return request({
+    url: '/sys/fileType/removeById.htm?id=' + id,
+    method: 'get'
+  })
+}

@@ -45,6 +45,11 @@ export const constantRoutes = [
         component: () => import('@/views/sysInfo/sysParamInfoList'),
         meta: { title: '参数管理', icon: 'table' }
       }, {
+        path: 'fileTypeList',
+        name: 'fileTypeList',
+        component: () => import('@/views/sysInfo/fileTypeList'),
+        meta: { title: '导出类型', icon: 'table' }
+      }, {
         path: 'sysInfoAdd',
         name: 'sysInfoAdd',
         component: () => import('@/views/sysInfo/sysInfoAdd')
@@ -96,6 +101,10 @@ export const constantRoutes = [
         path: 'sysParamInfoEdit/:paramId',
         name: 'sysParamInfoEdit',
         component: () => import('@/views/sysInfo/sysParamInfoEdit')
+      }, {
+        path: 'fileTypeEdit/:id',
+        name: 'fileTypeEdit',
+        component: () => import('@/views/sysInfo/fileTypeEdit')
       }
     ]
   }, {
