@@ -134,6 +134,19 @@ export const constantRoutes = [
         component: () => import('@/views/queue/queueInfoEdit')
       }
     ]
+  }, {
+    path: '/demoInfo',
+    component: Layout,
+    name: 'demoInfo',
+    meta: { title: '对接案例', icon: 'form' },
+    children: [
+      {
+        path: 'ERP-Order',
+        name: 'ERP-Order',
+        component: () => import('@/views/example/erp_order'),
+        meta: { title: 'ERP订单导出', icon: 'table' }
+      }
+    ]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]

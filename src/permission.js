@@ -17,7 +17,7 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '/dashboard' })
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name

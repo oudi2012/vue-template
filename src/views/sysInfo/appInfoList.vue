@@ -110,11 +110,7 @@ export default {
     },
     remove(appId) {
       this.listLoading = true
-      sysInfoRemove(appId).then(response => {
-        this.listLoading = false
-      }).catch(() => {
-        this.loading = false
-      })
+      sysInfoRemove(appId)
       this.getList()
     },
     toCreate() {
